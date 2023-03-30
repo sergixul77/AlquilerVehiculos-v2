@@ -18,7 +18,7 @@ public class MainApp {
 		
 		FactoriaFuenteDatos fuenteDatos = FactoriaFuenteDatos.MEMORIA;
 
-		Modelo modeloCascada = new ModeloCascada(FactoriaFuenteDatos));
+		Modelo modeloCascada = new ModeloCascada(FactoriaFuenteDatos)); 
 
 		Controlador controlador = new Controlador(modeloCascada, vistaTexto);
 
