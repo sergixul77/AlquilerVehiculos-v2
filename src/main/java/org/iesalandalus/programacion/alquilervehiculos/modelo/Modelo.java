@@ -18,6 +18,12 @@ public abstract class Modelo {
 	private IVehiculos vehiculos;
 	private IAlquileres alquileres;
 	private IFuenteDatos fuenteDatos;
+	
+	protected Modelo (FactoriaFuenteDatos factoriaFuenteDatos) {
+		this.fuenteDatos = factoriaFuenteDatos.crear();
+		setFuenteDatos(fuenteDatos);
+		comenzar();
+	}
 
 	protected IClientes getClientes() {
 		return clientes;
