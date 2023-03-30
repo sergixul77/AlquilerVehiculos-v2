@@ -16,9 +16,9 @@ public class MainApp {
 
 		VistaTexto vistaTexto = FactoriaVista.TEXTO.crear(); // Esto crea una nueva vista 
 		
-		FactoriaFuenteDatos fuenteDatos = FactoriaFuenteDatos.MEMORIA;
+		FactoriaFuenteDatos fuenteDatos = FactoriaFuenteDatos.MEMORIA; // obtengo una instancia de la factoria fuente de datos? 
 
-		Modelo modeloCascada = new ModeloCascada(FactoriaFuenteDatos)); 
+		Modelo modeloCascada = new ModeloCascada(fuenteDatos); // Creo una nueva fuente de datos donde voy a almacenar datos?
 
 		Controlador controlador = new Controlador(modeloCascada, vistaTexto);
 
