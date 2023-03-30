@@ -1,7 +1,8 @@
-package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria;
+package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
 
 import java.util.ArrayList;
+
 // version 1
 import java.util.List;
 
@@ -11,6 +12,8 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IVehiculos;
 
 public class Vehiculos implements IVehiculos {
+	
+	private static Vehiculos instancia;
 	
 	 private List<Vehiculo> coleccionVehiculos; 
 	

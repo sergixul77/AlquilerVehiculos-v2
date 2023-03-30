@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria;
+package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
 // version 1
 
@@ -16,6 +16,7 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IAlquilere
 
 public class Alquileres implements IAlquileres {
 	 
+	private static Alquileres instancia;
 
 	 private List<Alquiler> coleccionAlquileres;
 

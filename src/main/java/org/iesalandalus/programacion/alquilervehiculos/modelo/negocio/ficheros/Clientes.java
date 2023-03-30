@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria;
+package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,8 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
 // version 1
 
 public class Clientes implements IClientes {
+	
+	private static Clientes instancia;
 
 	private List<Cliente> coleccionClientes;
 

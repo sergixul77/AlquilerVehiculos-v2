@@ -1,7 +1,7 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IFuenteDatos;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria.FuenteDatosMemoria;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros.FuenteDatosMemoria;
 
 public enum FactoriaFuenteDatos {
 
@@ -13,6 +13,6 @@ public enum FactoriaFuenteDatos {
 		}
 	};
 	
-	public abstract IFuenteDatos crear ();
+	 abstract IFuenteDatos crear ();
 	
 }

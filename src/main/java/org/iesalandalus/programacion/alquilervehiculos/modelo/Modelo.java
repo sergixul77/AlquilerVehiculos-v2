@@ -18,8 +18,9 @@ public abstract class Modelo {
 	private IVehiculos vehiculos;
 	private IAlquileres alquileres;
 	private IFuenteDatos fuenteDatos;
-	
+	private FactoriaFuenteDatos factoriaFuenteDatos;
 	protected Modelo (FactoriaFuenteDatos factoriaFuenteDatos) {
+		this.factoriaFuenteDatos = factoriaFuenteDatos; // para que acepte un tipo de factoria de fuente de datos 
 		this.fuenteDatos = factoriaFuenteDatos.crear();
 		setFuenteDatos(fuenteDatos);
 		comenzar();
