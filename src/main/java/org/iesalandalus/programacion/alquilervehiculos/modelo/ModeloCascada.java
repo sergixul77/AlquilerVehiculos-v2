@@ -13,7 +13,7 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 public class ModeloCascada extends Modelo {
 
 	public ModeloCascada(FactoriaFuenteDatos factoriaFuenteDatos) {
-		super(factoriaFuenteDatos.MEMORIA); // mirar mas adelante, porque seguramente me de fallo.
+		super(factoriaFuenteDatos); // mirar mas adelante, porque seguramente me de fallo.
 	}
 
 	@Override

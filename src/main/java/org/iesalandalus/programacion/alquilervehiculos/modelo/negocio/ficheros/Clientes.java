@@ -1,9 +1,13 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.lang.model.element.Element;
 import javax.naming.OperationNotSupportedException;
+import javax.print.DocFlavor.STRING;
+import javax.swing.text.Document;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
@@ -11,24 +15,82 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
 // version 1
 
 public class Clientes implements IClientes {
-	
+
 	private static Clientes instancia;
+
+	private static File FICHEROS_CLIENTES = new File(String.format("%s%s%s", "datos", File.separator,"clientes.xmls"));
+	private static String RAIZ = "Raiz";
+	private static String CLIENTE = "Cliente";
+	private static String NOMBRE = "Nombre";
+	private static String DNI = "DNI";
+	private static String TELEFONO = "Télefono";
 
 	private List<Cliente> coleccionClientes;
 
-	public Clientes() {
+	private Clientes() {
 		coleccionClientes = new ArrayList<>(); // creando la lista
+	}
+
+	static Clientes getInstancia() {
+		
+		if (instancia == null) {
+			
+			instancia = new Clientes();
+		}
+		
+		return instancia;
+	}
+
+//	para que al comenzar lea el fichero XML de clientes, lo almacene en un una lista
+	
+	public void comenzar() {
+		
+		Document documento = UtilidadesXml.leerXmlDeFichero(FICHEROS_CLIENTES);
+		
+		if (documento != null) { /*Si el fichero es distinto de null*/
+		
+			System.out.println("El fichero XML se ha leido correctamente");
+			leerDom(documento);
+		} else {
+			System.out.printf("No se puede leer el fichero: %s. %s",FICHEROS_CLIENTES);
+		}
+
+		
+		
+		
+	}
+
+	private void leerDom(Document documentoXml) {
+		
+		File comienzo = new File((String.format);
+
+	}
+
+	private Cliente getCliente(Element elemento) {
+
+	}
+
+	public void terminar() {
+
+	}
+
+	private Document crearDom() {
+
+	}
+
+	private Element getElemento(Document documentoXml, Cliente cliente) {
+
 	}
 
 	@Override
 	public List<Cliente> get() {
 
-		return coleccionClientes;
+		return new ArrayList<>(coleccionClientes);
 	}
 
 	@Override
-public int getCantidad() { // tengo que recorrer la lista y incrementar en cada paso
-		
+	public int getCantidad() { // tengo que recorrer la lista y incrementar en cada paso
+
 		return coleccionClientes.size(); // devuelvo el tamaño de la coleccion
 	}
 
@@ -82,24 +144,16 @@ public int getCantidad() { // tengo que recorrer la lista y incrementar en cada 
 
 	}
 
-	/*
-	 * Crea el método modificar que permitirá cambiar el nombre o el teléfono (si
-	 * estos parámetros no son nulos ni blancos) de un cliente existente y si no
-	 * lanzará la correspondiente excepción.
-	 */
-
 	@Override
 	public void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
-		
+
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede modificar un cliente nulo.");
 		}
-		
-		
+
 		Cliente clienteEncontrado = buscar(cliente); // esto busca al cliente.
-		
-		
-		if (clienteEncontrado == null) { // si el cliente que buscamos no esta en la lista salta la excepcion 
+
+		if (clienteEncontrado == null) { // si el cliente que buscamos no esta en la lista salta la excepcion
 			throw new OperationNotSupportedException("ERROR: No existe ningún cliente con ese DNI.");
 		}
 
@@ -113,8 +167,6 @@ public int getCantidad() { // tengo que recorrer la lista y incrementar en cada 
 
 			clienteEncontrado.setNombre(nombre);
 		}
-
-		
 
 	}
 

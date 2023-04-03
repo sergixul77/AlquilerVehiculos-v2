@@ -20,10 +20,10 @@ public abstract class Modelo {
 	private IFuenteDatos fuenteDatos;
 	private FactoriaFuenteDatos factoriaFuenteDatos;
 	protected Modelo (FactoriaFuenteDatos factoriaFuenteDatos) {
-		this.factoriaFuenteDatos = factoriaFuenteDatos; // para que acepte un tipo de factoria de fuente de datos 
-		this.fuenteDatos = factoriaFuenteDatos.crear();
-		setFuenteDatos(fuenteDatos);
-		comenzar();
+		clientes = fuenteDatos.crearClientes();
+		vehiculos = fuenteDatos.crearVehiculos();
+		alquileres = fuenteDatos.crearAlquileres();
+		setFuenteDatos(factoriaFuenteDatos.crear()); // seguramente me de fallo esto te crea una nueva fuente de datos memoria
 	}
 
 	protected IClientes getClientes() {
@@ -43,9 +43,7 @@ public abstract class Modelo {
 	}
 
 	public void comenzar() {
-		clientes = fuenteDatos.crearClientes();
-		vehiculos = fuenteDatos.crearVehiculos();
-		alquileres = fuenteDatos.crearAlquileres();
+		// llamar luego a la de las otras clases.
 	}
 
 	public void terminar() {
