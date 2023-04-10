@@ -17,7 +17,7 @@ public interface IAlquileres {
 
 	List<Alquiler> get(Vehiculo vehiculo);
 
-	int getCantidad();
+	void comenzar();
 
 	void insertar(Alquiler alquiler) throws OperationNotSupportedException;
 
@@ -28,5 +28,9 @@ public interface IAlquileres {
 	Alquiler buscar(Alquiler alquiler);
 
 	void borrar(Alquiler alquiler) throws OperationNotSupportedException;
+
+	void terminar();
+
+	
 
 }

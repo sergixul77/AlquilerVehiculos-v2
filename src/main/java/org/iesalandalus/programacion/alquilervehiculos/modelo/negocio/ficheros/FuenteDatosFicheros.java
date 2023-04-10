@@ -5,27 +5,25 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IFuenteDatos;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IVehiculos;
 
-public class FuenteDatosMemoria implements IFuenteDatos {
+public class FuenteDatosFicheros implements IFuenteDatos {
 	@Override
-	public IClientes crearClientes () { // Creo una interfaz de la clase clientes que devuelve un nuevo cliente. 
-		
+	public IClientes crearClientes() { // Creo una interfaz de la clase clientes que devuelve un nuevo cliente.
+
 		return Clientes.getInstancia();
-		
 	}
-	
+
 	@Override
-public IVehiculos crearVehiculos () {
-	
-	return new Vehiculos();
-	
+	public IVehiculos crearVehiculos() {
+
+		return Vehiculos.getInstancia();
+
 	}
+
 	@Override
-public IAlquileres crearAlquileres () {
-	
-	return new Alquileres();
-	
-}
+	public IAlquileres crearAlquileres() {
 
+		return Alquileres.getInstancia();
 
+	}
 
 }

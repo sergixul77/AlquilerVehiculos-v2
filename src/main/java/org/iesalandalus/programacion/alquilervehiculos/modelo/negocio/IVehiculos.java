@@ -11,12 +11,14 @@ public interface IVehiculos {
 
 	List<Vehiculo> get();
 
-	int getCantidad();
 
 	void insertar(Vehiculo turismo) throws OperationNotSupportedException;
 
 	Vehiculo buscar(Vehiculo turismo);
 
 	void borrar(Vehiculo vehiculo) throws OperationNotSupportedException;
+
+
+	void comenzar();
 
 }

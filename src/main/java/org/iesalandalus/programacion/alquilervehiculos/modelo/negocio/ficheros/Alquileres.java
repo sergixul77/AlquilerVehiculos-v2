@@ -11,21 +11,26 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
+import javax.xml.parsers.DocumentBuilder;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IAlquileres;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class Alquileres implements IAlquileres {
 	
 	
-
 	private static final File FICHEROS_ALQUILERES = new File(String.format("%s%s%s", "datos",File.separator,"alquileres.xml"));
-	private static final DateTimeFormatter FORMATO_FECHA = "";
+	private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");;
 	private static final String RAIZ = "alquileres";
 	private static final String ALQUILER = "alquiler";
-	private static final String Vehiculo = "vehiculo";
+	private static final String VEHICULO = "vehiculo";
+	private static final String CLIENTE = "cliente";
 	private static final String FECHA_ALQUILER = "fechaAlquiler";
 	private static final String FECHA_DEVOLUCION = "fechaDevolucion";
 	
@@ -52,12 +57,107 @@ public class Alquileres implements IAlquileres {
 	
 	
 	
-	public void comenzar () {
+	@Override
+	public void comenzar() {
+
+		Document documento = UtilidadesXml.leerXmlDeFichero(FICHEROS_ALQUILERES);
+
+		if (documento != null) { /* Si el fichero es distinto de null */
+
+			System.out.println("El fichero XML se ha leido correctamente");
+			leerDom(documento);
+		} else {
+			System.out.printf("No se puede leer el fichero: %s. %n", FICHEROS_ALQUILERES);
+		}
+
+	}
+	
+	
+	private void leerDom(Document documentoXml) {
+
+		NodeList alquileres = documentoXml.getElementsByTagName(ALQUILER);
+		for (int i = 0; i < alquileres.getLength(); i++) {
+			Node alquiler = alquileres.item(i);
+			if (alquiler.getNodeType() == Node.ELEMENT_NODE) {
+
+				try {
+					insertar(getAlquiler((Element) alquiler)); // le hacemos casting a cliente de tipo node para que sea
+																// un elemento
+				} catch (OperationNotSupportedException | NullPointerException e) {
+
+					System.out.println(e.getMessage());
+
+				}
+
+			}
+		}
+
+	}
+	
+	private Alquiler getAlquiler(Element elemento) {
+		String cliente = elemento.getAttribute(CLIENTE);
+		Cliente buscar_cliente = Clientes.getInstancia().buscar(Cliente.getClienteConDni(cliente));
+		String fechaAlquiler = elemento.getAttribute(FECHA_ALQUILER);
+		LocalDate localDate = LocalDate.parse(fechaAlquiler, FORMATO_FECHA);
+		String fecha_devolucion = elemento.getAttribute(FECHA_DEVOLUCION);
+		LocalDate formato_fechaDevolucion = LocalDate.parse(fecha_devolucion, FORMATO_FECHA);
+		String vehiculo = elemento.getAttribute(VEHICULO);
+		Vehiculo buscar_vehiculo = Vehiculos.getInstancia().buscar(Vehiculo.getVehiculoConMatricula(vehiculo));
 		
+		if (buscar_vehiculo == null) {
+			throw new NullPointerException("El vehiculo buscado no puede ser nulo");
+		}
+		
+		if (buscar_cliente == null) {
+			throw new NullPointerException("El cliente buscado no puede ser nulo");
+		}
+		
+		
+		if (!fecha_devolucion.isEmpty()) {
+			
+			Alquiler alquilerDevolucion = new Alquiler(cliente, vehiculo, fechaAlquiler, fechaDevolucion);
+		
+		}
+		  
+		return new Alquiler(buscar_cliente, buscar_vehiculo, localDate);
 	}
 	
 	
 	
+	@Override
+	public void terminar() {
+
+		UtilidadesXml.escribirXmlAFichero(crearDom(), FICHEROS_ALQUILERES);
+
+	}
+	
+	private Document crearDom() {
+
+		DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
+		Document documentoXml = null;
+		if (constructor != null) {
+			documentoXml = constructor.newDocument();
+			documentoXml.appendChild(documentoXml.createElement(RAIZ));
+			for (Alquiler alquiler : coleccionAlquileres) {
+				Element elementoAlquiler = getElemento(documentoXml, alquiler);
+				documentoXml.getDocumentElement().appendChild(elementoAlquiler);
+			}
+		}
+		return documentoXml;
+
+	}
+	
+	
+	private Element getElemento(Document documentoXml, Alquiler alquiler) {
+
+		Element elementoAlquiler = documentoXml.createElement(ALQUILER);
+		elementoAlquiler.setAttribute(CLIENTE, Cliente.getClienteConDni(CLIENTE));
+		elementoAlquiler.setAttribute(VEHICULO, Vehiculo.getVehiculoConMatricula(ALQUILER));
+		elementoAlquiler.setAttribute(TELEFONO, cliente.getTelefono());
+		return elementoAlquiler;
+
+	}
+
 	@Override
 	public List<Alquiler> get() {
 		return new ArrayList<>(coleccionAlquileres);
@@ -97,12 +197,7 @@ public class Alquileres implements IAlquileres {
 
 	}
 
-//	@Override
-//	public int getCantidad() {
-//
-//		return coleccionAlquileres.size();
-//
-//	}
+
 	
 	
 	
@@ -153,21 +248,21 @@ public class Alquileres implements IAlquileres {
 
 	}
 
-	/*public void devolver(Alquiler alquiler , LocalDate fechaDevolucion) throws OperationNotSupportedException {
-
-		if (alquiler == null) {
-			throw new NullPointerException("ERROR: No se puede devolver un alquiler nulo.");
-		}
-
-		if (coleccionAlquileres.contains(alquiler)) {
-			
-			alquiler.devolver(fechaDevolucion);
-			
-		}else {
-			throw new OperationNotSupportedException("ERROR: No existe ningún alquiler igual.");
-		}
-
-	}*/
+//	public void devolver(Alquiler alquiler , LocalDate fechaDevolucion) throws OperationNotSupportedException {
+//
+//		if (alquiler == null) {
+//			throw new NullPointerException("ERROR: No se puede devolver un alquiler nulo.");
+//		}
+//
+//		if (coleccionAlquileres.contains(alquiler)) {
+//			
+//			alquiler.devolver(fechaDevolucion);
+//			
+//		}else {
+//			throw new OperationNotSupportedException("ERROR: No existe ningún alquiler igual.");
+//		}
+//
+//	}
 	
 	
 	
@@ -285,5 +380,8 @@ public class Alquileres implements IAlquileres {
 
 		
 	}
+
+
+	
 
 }
