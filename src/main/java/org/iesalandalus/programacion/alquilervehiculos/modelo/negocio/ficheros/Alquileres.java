@@ -1,8 +1,11 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
+import java.io.File;
+
 // version 1
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +18,17 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IAlquileres;
 
 public class Alquileres implements IAlquileres {
-	 
+	
+	
+
+	private static final File FICHEROS_ALQUILERES = new File(String.format("%s%s%s", "datos",File.separator,"alquileres.xml"));
+	private static final DateTimeFormatter FORMATO_FECHA = "";
+	private static final String RAIZ = "alquileres";
+	private static final String ALQUILER = "alquiler";
+	private static final String Vehiculo = "vehiculo";
+	private static final String FECHA_ALQUILER = "fechaAlquiler";
+	private static final String FECHA_DEVOLUCION = "fechaDevolucion";
+	
 	private static Alquileres instancia;
 
 	 private List<Alquiler> coleccionAlquileres;
@@ -25,6 +38,25 @@ public class Alquileres implements IAlquileres {
 		coleccionAlquileres = new ArrayList<>(); // creando la lista
 
 	}
+	
+	
+	static Alquileres getInstancia() {
+
+		if (instancia == null) {
+
+			instancia = new Alquileres();
+		}
+
+		return instancia;
+	}
+	
+	
+	
+	public void comenzar () {
+		
+	}
+	
+	
 	
 	@Override
 	public List<Alquiler> get() {
@@ -65,12 +97,16 @@ public class Alquileres implements IAlquileres {
 
 	}
 
-	@Override
-	public int getCantidad() {
-
-		return coleccionAlquileres.size();
-
-	}
+//	@Override
+//	public int getCantidad() {
+//
+//		return coleccionAlquileres.size();
+//
+//	}
+	
+	
+	
+	
 
 	private void comprobarAlquiler(Cliente cliente, Vehiculo vehiculo, LocalDate fechaAlquiler)
 			throws OperationNotSupportedException {

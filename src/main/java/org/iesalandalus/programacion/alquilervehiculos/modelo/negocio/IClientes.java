@@ -11,7 +11,9 @@ public interface IClientes {
 
 	List<Cliente> get();
 
-	int getCantidad();
+	void comenzar ();
+	
+	void terminar ();
 
 	void insertar(Cliente cliente) throws OperationNotSupportedException;
 
@@ -20,5 +22,7 @@ public interface IClientes {
 	void borrar(Cliente cliente) throws OperationNotSupportedException;
 
 	void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException;
+	
+	
 
 }

@@ -4,26 +4,29 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.lang.model.element.Element;
 import javax.naming.OperationNotSupportedException;
-import javax.print.DocFlavor.STRING;
-import javax.swing.text.Document;
+import javax.xml.parsers.DocumentBuilder;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 // version 1
 
 public class Clientes implements IClientes {
 
 	private static Clientes instancia;
-
-	private static File FICHEROS_CLIENTES = new File(String.format("%s%s%s", "datos", File.separator,"clientes.xmls"));
-	private static String RAIZ = "Raiz";
-	private static String CLIENTE = "Cliente";
-	private static String NOMBRE = "Nombre";
-	private static String DNI = "DNI";
-	private static String TELEFONO = "Télefono";
+	
+	 static final File FICHEROS_CLIENTES = new File(
+			String.format("%s%s%s", "datos", File.separator, "clientes.xml"));
+	private static final String RAIZ = "clientes";
+	private static final String CLIENTE = "cliente";
+	private static final String NOMBRE = "nombre";
+	private static final String DNI = "dni";
+	private static final String TELEFONO = "telefono";
 
 	private List<Cliente> coleccionClientes;
 
@@ -32,53 +35,92 @@ public class Clientes implements IClientes {
 	}
 
 	static Clientes getInstancia() {
-		
+
 		if (instancia == null) {
-			
+
 			instancia = new Clientes();
 		}
-		
+
 		return instancia;
 	}
 
 //	para que al comenzar lea el fichero XML de clientes, lo almacene en un una lista
-	
+
+	@Override
 	public void comenzar() {
-		
+
 		Document documento = UtilidadesXml.leerXmlDeFichero(FICHEROS_CLIENTES);
-		
-		if (documento != null) { /*Si el fichero es distinto de null*/
-		
+
+		if (documento != null) { /* Si el fichero es distinto de null */
+
 			System.out.println("El fichero XML se ha leido correctamente");
 			leerDom(documento);
 		} else {
-			System.out.printf("No se puede leer el fichero: %s. %s",FICHEROS_CLIENTES);
+			System.out.printf("No se puede leer el fichero: %s. %n", FICHEROS_CLIENTES);
 		}
 
-		
-		
-		
 	}
 
 	private void leerDom(Document documentoXml) {
-		
-		File comienzo = new File((String.format);
+
+		NodeList clientes = documentoXml.getElementsByTagName(CLIENTE);
+		for (int i = 0; i < clientes.getLength(); i++) {
+			Node cliente = clientes.item(i);
+			if (cliente.getNodeType() == Node.ELEMENT_NODE) {
+
+				try {
+					insertar(getCliente((Element) cliente)); // le hacemos casting a cliente de tipo node para que sea
+																// un elemento
+				} catch (OperationNotSupportedException | NullPointerException e) {
+
+					System.out.println(e.getMessage());
+
+				}
+
+			}
+		}
 
 	}
 
 	private Cliente getCliente(Element elemento) {
 
+		String dni = elemento.getAttribute(DNI);
+		String nombre = elemento.getAttribute(NOMBRE);
+		String telefono = elemento.getAttribute(TELEFONO);
+
+		return new Cliente(nombre, dni, telefono);
 	}
 
+	@Override
 	public void terminar() {
+
+		UtilidadesXml.escribirXmlAFichero(crearDom(), FICHEROS_CLIENTES);
 
 	}
 
 	private Document crearDom() {
 
+		DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
+		Document documentoXml = null;
+		if (constructor != null) {
+			documentoXml = constructor.newDocument();
+			documentoXml.appendChild(documentoXml.createElement(RAIZ));
+			for (Cliente cliente : coleccionClientes) {
+				Element elementoCliente = getElemento(documentoXml, cliente);
+				documentoXml.getDocumentElement().appendChild(elementoCliente);
+			}
+		}
+		return documentoXml;
+
 	}
 
 	private Element getElemento(Document documentoXml, Cliente cliente) {
+
+		Element elementoCliente = documentoXml.createElement(CLIENTE);
+		elementoCliente.setAttribute(NOMBRE, cliente.getNombre());
+		elementoCliente.setAttribute(DNI, cliente.getDni());
+		elementoCliente.setAttribute(TELEFONO, cliente.getTelefono());
+		return elementoCliente;
 
 	}
 
@@ -86,12 +128,6 @@ public class Clientes implements IClientes {
 	public List<Cliente> get() {
 
 		return new ArrayList<>(coleccionClientes);
-	}
-
-	@Override
-	public int getCantidad() { // tengo que recorrer la lista y incrementar en cada paso
-
-		return coleccionClientes.size(); // devuelvo el tamaño de la coleccion
 	}
 
 	@Override

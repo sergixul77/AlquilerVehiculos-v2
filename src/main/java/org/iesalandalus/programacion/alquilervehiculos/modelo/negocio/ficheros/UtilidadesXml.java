@@ -1,5 +1,6 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.ficheros;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -37,7 +38,7 @@ public class UtilidadesXml {
 		return constructor;
 	}
 
-	public static void escribirXmlAFichero(Document documento, String salida) {
+	public static void escribirXmlAFichero(Document documento, File salida) {
 		try (FileWriter ficheroSalida = new FileWriter(salida)) {
 			TransformerFactory factoria = TransformerFactory.newInstance();
 			factoria.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
@@ -59,7 +60,7 @@ public class UtilidadesXml {
 		}
 	}
 
-	public static Document leerXmlDeFichero(String ficheroXml) {
+	public static Document leerXmlDeFichero(File ficheroXml) {
 		Document documentoXml = null;
 		try {
 			DocumentBuilder constructor = crearConstructorDocumentoXml();

@@ -9,7 +9,7 @@ public class FuenteDatosMemoria implements IFuenteDatos {
 	@Override
 	public IClientes crearClientes () { // Creo una interfaz de la clase clientes que devuelve un nuevo cliente. 
 		
-		return new Clientes();
+		return Clientes.getInstancia();
 		
 	}
 	
