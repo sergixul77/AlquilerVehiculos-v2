@@ -19,9 +19,8 @@ import org.w3c.dom.NodeList;
 public class Clientes implements IClientes {
 
 	private static Clientes instancia;
-	
-	 static final File FICHEROS_CLIENTES = new File(
-			String.format("%s%s%s", "datos", File.separator, "clientes.xml"));
+
+	static final File FICHEROS_CLIENTES = new File(String.format("%s%s%s", "datos", File.separator, "clientes.xml"));
 	private static final String RAIZ = "clientes";
 	private static final String CLIENTE = "cliente";
 	private static final String NOMBRE = "nombre";
@@ -53,7 +52,7 @@ public class Clientes implements IClientes {
 
 		if (documento != null) { /* Si el fichero es distinto de null */
 
-			System.out.println("El fichero XML se ha leido correctamente");
+			System.out.println("El fichero XML de cientes se ha leido correctamente");
 			leerDom(documento);
 		} else {
 			System.out.printf("No se puede leer el fichero: %s. %n", FICHEROS_CLIENTES);
@@ -74,6 +73,7 @@ public class Clientes implements IClientes {
 				} catch (OperationNotSupportedException | NullPointerException e) {
 
 					System.out.println(e.getMessage());
+					System.out.println(i);
 
 				}
 

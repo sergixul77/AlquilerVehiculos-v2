@@ -4,7 +4,7 @@ import org.iesalandalus.programacion.alquilervehiculos.controlador.Controlador;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.FactoriaFuenteDatos;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.Modelo;
 
-//version 1
+//version 2
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.ModeloCascada;
 import org.iesalandalus.programacion.alquilervehiculos.vista.FactoriaVista;
@@ -14,11 +14,13 @@ public class MainApp {
 
 	public static void main(String[] args) {
 
-		VistaTexto vistaTexto = FactoriaVista.TEXTO.crear(); // Esto crea una nueva vista 
-		
-		FactoriaFuenteDatos fuenteDatos = FactoriaFuenteDatos.FICHEROS; // obtengo una instancia de la factoria fuente de datos? 
+		VistaTexto vistaTexto = FactoriaVista.TEXTO.crear(); // Esto crea una nueva vista
 
-		Modelo modeloCascada = new ModeloCascada(fuenteDatos); // Creo una nueva fuente de datos donde voy a almacenar datos?
+		FactoriaFuenteDatos fuenteDatos = FactoriaFuenteDatos.FICHEROS; // obtengo una instancia de la factoria fuente
+																		// de datos?
+
+		Modelo modeloCascada = new ModeloCascada(fuenteDatos); // Creo una nueva fuente de datos donde voy a almacenar
+																// datos?
 
 		Controlador controlador = new Controlador(modeloCascada, vistaTexto);
 
@@ -27,4 +29,3 @@ public class MainApp {
 	}
 
 }
-

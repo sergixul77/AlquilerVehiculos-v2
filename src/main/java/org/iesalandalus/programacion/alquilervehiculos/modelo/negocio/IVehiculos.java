@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 
 public interface IVehiculos {
@@ -20,5 +19,8 @@ public interface IVehiculos {
 
 
 	void comenzar();
+
+
+	void terminar();
 
 }

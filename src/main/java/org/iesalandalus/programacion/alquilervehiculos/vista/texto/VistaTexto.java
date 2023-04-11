@@ -7,10 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Autobus;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
@@ -215,21 +212,35 @@ public class VistaTexto extends Vista {
 
 	public void mostrarEstadisticasMensualesTipoVehiculo() {
 
-		LocalDate mesInicio = Consola.leerMes(); /*Leemos el mes*/
-		Map<TipoVehiculo, Integer> mapa = inicializarEstadisticas(); /*Utilizamos el metodo inicializar estadisticas que inicializa a 0 los vehiculos*/
+		LocalDate mesInicio = Consola.leerMes(); /* Leemos el mes */
+		Map<TipoVehiculo, Integer> mapa = inicializarEstadisticas(); /*
+																		 * Utilizamos el metodo inicializar estadisticas
+																		 * que inicializa a 0 los vehiculos
+																		 */
 		for (Alquiler alquiler : getControlador().getAlquileres()) { // recorro la lista de alquileres
 //			if (alquiler.getFechaAlquiler().isAfter(mesInicio.minusDays(1)) && alquiler.getFechaAlquiler().isBefore(mesFin)) { /*Si la fecha de alquiler es despues */ 
 //			
 //				
 //				
 //			}
-			
-			if (alquiler.getFechaAlquiler().getMonthValue() == mesInicio.getMonthValue() && alquiler.getFechaAlquiler().getYear() == mesInicio.getYear())  { // esto comprueba si el mes del alquier que leo por la lista es igual al mes de inicio.
-				
-				mapa.put(TipoVehiculo.get(alquiler.getVehiculo()), mapa.getOrDefault(TipoVehiculo.get(alquiler.getVehiculo()),0)+1); // coge el tipo del vehiculo y mira la cantidad que tiene, de forma predeterminada estara a 0 , entonces cuando sea de un turismo hara 0 + 1 = 1
-				
+
+			if (alquiler.getFechaAlquiler().getMonthValue() == mesInicio.getMonthValue()
+					&& alquiler.getFechaAlquiler().getYear() == mesInicio.getYear()) { // esto comprueba si el mes del
+																						// alquier que leo por la lista
+																						// es igual al mes de inicio.
+
+				mapa.put(TipoVehiculo.get(alquiler.getVehiculo()),
+						mapa.getOrDefault(TipoVehiculo.get(alquiler.getVehiculo()), 0) + 1); // coge el tipo del
+																								// vehiculo y mira la
+																								// cantidad que tiene,
+																								// de forma
+																								// predeterminada estara
+																								// a 0 , entonces cuando
+																								// sea de un turismo
+																								// hara 0 + 1 = 1
+
 			}
-			
+
 		}
 
 	}

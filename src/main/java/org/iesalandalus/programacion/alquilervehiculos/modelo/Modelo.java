@@ -18,12 +18,14 @@ public abstract class Modelo {
 	private IVehiculos vehiculos;
 	private IAlquileres alquileres;
 	private IFuenteDatos fuenteDatos;
-	private FactoriaFuenteDatos factoriaFuenteDatos;
-	protected Modelo (FactoriaFuenteDatos factoriaFuenteDatos) {
+
+	protected Modelo(FactoriaFuenteDatos factoriaFuenteDatos) {
+		setFuenteDatos(factoriaFuenteDatos.crear()); // seguramente me de fallo esto te crea una nueva fuente de datos
+														// memoria
 		clientes = fuenteDatos.crearClientes();
 		vehiculos = fuenteDatos.crearVehiculos();
 		alquileres = fuenteDatos.crearAlquileres();
-		setFuenteDatos(factoriaFuenteDatos.crear()); // seguramente me de fallo esto te crea una nueva fuente de datos memoria
+
 	}
 
 	protected IClientes getClientes() {
@@ -39,7 +41,7 @@ public abstract class Modelo {
 	}
 
 	protected void setFuenteDatos(IFuenteDatos fuenteDatos) {
-		
+
 		if (fuenteDatos == null) {
 			throw new NullPointerException("La fuente de datos no puede ser nula");
 		}
@@ -47,7 +49,10 @@ public abstract class Modelo {
 	}
 
 	public void comenzar() {
-		// llamar luego a la de las otras clases.
+		vehiculos.comenzar();
+		clientes.comenzar();
+		alquileres.comenzar();
+		
 	}
 
 	public void terminar() {

@@ -16,10 +16,10 @@ public enum TipoVehiculo {
 		this.nombre = nombre;
 
 	}
-	
-	private static boolean esOrdinalValido (int ordinal) {
+
+	private static boolean esOrdinalValido(int ordinal) {
 		return ordinal >= 0 && ordinal < values().length;
-			
+
 	}
 
 	public static TipoVehiculo get(int ordinal) {
