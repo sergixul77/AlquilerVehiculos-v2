@@ -149,6 +149,7 @@ public class Alquileres implements IAlquileres {
 		elementoAlquiler.setAttribute(CLIENTE, alquiler.getCliente().getDni());
 		elementoAlquiler.setAttribute(FECHA_ALQUILER, alquiler.getFechaAlquiler().format(FORMATO_FECHA));
 		elementoAlquiler.setAttribute(FECHA_DEVOLUCION, alquiler.getFechaDevolucion().format(FORMATO_FECHA));
+		elementoAlquiler.setAttribute(VEHICULO, alquiler.getVehiculo().getMatricula());
 		return elementoAlquiler;
 
 	}

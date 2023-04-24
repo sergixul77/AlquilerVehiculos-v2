@@ -92,10 +92,10 @@ public class Vehiculos implements IVehiculos {
 		if (elemento.getAttribute(TIPO).equals(TURISMO)) {
 			int cilindrada = Integer.parseInt(elemento.getAttribute(CILINDRADA));
 			vehiculo = new Turismo(marca, modelo, cilindrada, matricula);
-		} else if (elemento.getAttribute(matricula).equals(AUTOBUS)) {
+		} else if (elemento.getAttribute(TIPO).equals(AUTOBUS)) {
 			int plazas = Integer.parseInt(elemento.getAttribute(PLAZAS));
 			vehiculo = new Autobus(marca, modelo, plazas, matricula);
-		} else if (elemento.getAttribute(matricula).equals(FURGONETA)) {
+		} else if (elemento.getAttribute(TIPO).equals(FURGONETA)) {
 			int plazas = Integer.parseInt(elemento.getAttribute(PLAZAS));
 			int pma = Integer.parseInt(elemento.getAttribute(PMA));
 			vehiculo = new Furgoneta(marca, modelo, pma, plazas, matricula);
