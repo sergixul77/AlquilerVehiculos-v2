@@ -148,8 +148,12 @@ public class Alquileres implements IAlquileres {
 		Element elementoAlquiler = documentoXml.createElement(ALQUILER);
 		elementoAlquiler.setAttribute(CLIENTE, alquiler.getCliente().getDni());
 		elementoAlquiler.setAttribute(FECHA_ALQUILER, alquiler.getFechaAlquiler().format(FORMATO_FECHA));
-		elementoAlquiler.setAttribute(FECHA_DEVOLUCION, alquiler.getFechaDevolucion().format(FORMATO_FECHA));
 		elementoAlquiler.setAttribute(VEHICULO, alquiler.getVehiculo().getMatricula());
+	
+		if (alquiler.getFechaDevolucion() != null) {
+			
+			elementoAlquiler.setAttribute(FECHA_DEVOLUCION, alquiler.getFechaDevolucion().format(FORMATO_FECHA));
+		}
 		return elementoAlquiler;
 
 	}

@@ -35,6 +35,7 @@ public class VistaTexto extends Vista {
 	}
 
 	public void terminar() {
+		getControlador().terminar();
 		System.out.println("Me despido de ti, desde alquiler Sergio");
 	}
 
